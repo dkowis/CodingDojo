@@ -11,10 +11,7 @@ class NumberParser() {
    */
   def loadFile(source: Source): List[List[String]] = {
     val grouped = source.getLines().grouped(4)
-    //TODO: could probably map, if I can map on an iterator...
-    grouped.foldLeft(List[List[String]]())((coll, strings) => {
-      strings.toList :: coll
-    }).reverse
+    grouped.map(group => group.toList).toList
   }
 
   /**
