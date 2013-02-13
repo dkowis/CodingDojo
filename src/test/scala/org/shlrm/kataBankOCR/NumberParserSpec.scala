@@ -1,13 +1,41 @@
 package org.shlrm.kataBankOCR
 
 import org.specs2.mutable._
+import io.Source
+import org.specs2.specification.Scope
+
+trait fileSetup extends Scope {
+  lazy val source = Source.fromURL(getClass.getResource("/usecase1.txt"))
+  lazy val parser = new NumberParser()
+}
 
 class NumberParserSpec extends Specification {
-  "The file with 123456789" should {
-    "parse to 123456789" in {
-      //hand file path to something
-      def parser = new NumberParser("scannedPaper.txt")
-      parser.value must beEqualTo(123456789)
+  "The file with the tests for usecase1" should {
+    "provide 11 account numbers" in new fileSetup {
+      val parsed = parser.loadFile(source)
+      parsed.size must beEqualTo(11)
+      //Print them out to look at them, easy enough to verify by hand
+      //parsed.foreach(x => {
+      //  println(s"${x.foldLeft("")((a,b) => a + "\n" + b)}")
+      //})
+    }
+    "compute out to the correct list of account numbers" in new fileSetup {
+      val parsed = parser.loadFile(source)
+      parser.toNumber(parsed) must beEqualTo(
+        List(
+          "000000000",
+          "111111111",
+          "222222222",
+          "333333333",
+          "444444444",
+          "555555555",
+          "666666666",
+          "777777777",
+          "888888888",
+          "999999999",
+          "123456789"
+        )
+      )
     }
   }
 }
