@@ -32,11 +32,4 @@ class NumberParser() {
       accountNumber
     })
   }
-
-  def value: Int = {
-
-
-    0
-  }
-
 }
