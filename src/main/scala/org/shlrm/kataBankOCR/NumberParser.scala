@@ -21,9 +21,8 @@ class NumberParser() {
    * Convert the lines into a list of account numbers as text instead!
    * @param lines
    */
-  def toNumber(lines:List[List[String]]) = {
-    //TODO: could probably do this in a for comprehension, or maybe a map, rather than fold left
-    lines.foldLeft(List[String]())((acctNo, unparsed) => {
+  def toNumber(lines: List[List[String]]) = {
+    lines.map(unparsed => {
       //Collect a number out of the first 3 characters of all three lists
       val line1 = unparsed(0).grouped(3).toList
       val line2 = unparsed(1).grouped(3).toList
@@ -33,9 +32,8 @@ class NumberParser() {
       val accountNumber = (0 to 8).foldLeft("")((acc, index) => {
         acc + fromString(s"${line1(index)}\n${line2(index)}\n${line3(index)}")
       })
-      accountNumber :: acctNo
-    }).reverse
-
+      accountNumber
+    })
   }
 
   def value: Int = {
