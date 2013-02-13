@@ -1,34 +1,40 @@
 package org.shlrm.kataBankOCR
 
 import io.Source
+import Numbers._
 
 class NumberParser() {
 
   /**
-   * Lets read in the entire file, and get a List of List of strings, 3 lines for each entry
+   * Reads in a source, and returns a list of all the lines in it, grouped by the 4 lines per account
    * @return
    */
   def loadFile(source: Source): List[List[String]] = {
     val grouped = source.getLines().grouped(4)
+    //TODO: could probably map, if I can map on an iterator...
     grouped.foldLeft(List[List[String]]())((coll, strings) => {
       strings.toList :: coll
     }).reverse
   }
 
   /**
-   * Take an account number and return the nine digits that are it
-   * Get a list of list of strings, then we can go through each one and determine if it properly matches things
+   * Convert the lines into a list of account numbers as text instead!
    * @param lines
    */
   def toNumber(lines:List[List[String]]) = {
-    /*
-    Convert the list of strings to a matrix of things that look like LED numbers
-    Specifically a list of two dimensional arrays (or whatever the non mutable thing is for that)
-    x_x 010
-    |_| 111
-    |_| 111
-     */
+    //TODO: could probably do this in a for comprehension, or maybe a map, rather than fold left
+    lines.foldLeft(List[String]())((acctNo, unparsed) => {
+      //Collect a number out of the first 3 characters of all three lists
+      val line1 = unparsed(0).grouped(3).toList
+      val line2 = unparsed(1).grouped(3).toList
+      val line3 = unparsed(2).grouped(3).toList
 
+      //I know that there are 9 numbers in a line
+      val accountNumber = (0 to 8).foldLeft("")((acc, index) => {
+        acc + fromString(s"${line1(index)}\n${line2(index)}\n${line3(index)}")
+      })
+      accountNumber :: acctNo
+    }).reverse
 
   }
 
