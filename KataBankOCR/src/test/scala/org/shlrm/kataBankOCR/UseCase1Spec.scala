@@ -3,7 +3,7 @@ package org.shlrm.kataBankOCR
 import org.specs2.mutable._
 import io.Source
 
-class UseCaseOneSpec extends Specification {
+class UseCase1Spec extends Specification {
   "The file with the tests for usecase1" should {
     "compute out to the correct list of account numbers" in {
       val source = Source.fromURL(getClass.getResource("/usecase1.txt"))
