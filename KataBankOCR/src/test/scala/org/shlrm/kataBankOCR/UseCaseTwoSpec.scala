@@ -7,9 +7,11 @@ class UseCaseTwoSpec extends Specification {
   "The parser" should {
     "know if an account number is valid" in {
       val parser = new NumberParser()
-
-      parser.validAccount("345882865") must beTrue
-
+      parser.validAccount("457508000") must beTrue
+    }
+    "know if an account number is not valid" in {
+      val parser = new NumberParser()
+      parser.validAccount("664371495") must beFalse
     }
   }
 

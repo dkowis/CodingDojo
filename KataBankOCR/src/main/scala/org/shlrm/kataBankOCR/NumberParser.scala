@@ -2,6 +2,7 @@ package org.shlrm.kataBankOCR
 
 import io.Source
 import Numbers._
+import collection.immutable.Range
 
 class NumberParser() {
 
@@ -33,5 +34,18 @@ class NumberParser() {
     })
   }
 
-  def validAccount(acct: String):Boolean = ???
+  def validAccount(acct: String): Boolean = {
+    val ints = acct.map(x => {
+      x.asDigit
+    }).toList
+
+    def checksum(acc:Int, xs:List[Int]):Boolean = {
+      if (xs.isEmpty)
+        acc % 11 == 0
+      else {
+        checksum(acc + xs.head * xs.size, xs.tail)
+      }
+    }
+    checksum(0, ints)
+  }
 }
