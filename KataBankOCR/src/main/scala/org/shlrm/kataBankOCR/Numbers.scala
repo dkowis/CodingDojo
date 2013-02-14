@@ -24,5 +24,6 @@ object Numbers {
     case `eight` => '8'
     case `nine`  => '9'
     case `zero`  => '0'
+    case _       => '?'
   }
 }

@@ -58,6 +58,10 @@ class Account(accountNumber: String) {
     checksum(0, ints)
   }
 
+  lazy val status: String = {
+    ???
+  }
+
   override def toString = {
     s"${accountNumber}"
   }
