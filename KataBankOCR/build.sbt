@@ -7,8 +7,11 @@ scalaVersion := "2.10.0"
 
 
 libraryDependencies ++= Seq (
-    "org.specs2" %% "specs2" % "1.13" % "test"
+    "org.specs2" %% "specs2" % "1.13" % "test",
+    "com.github.axel22" %% "scalameter" % "0.2" % "test"
     )
+
+testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework")
 
 resolvers ++= Seq( "snapshots" at "http://oss.sonatype.org/content/repositories/snapshots",
     "releases" at "http://oss.sonatype.org/content/repositories/releases")
