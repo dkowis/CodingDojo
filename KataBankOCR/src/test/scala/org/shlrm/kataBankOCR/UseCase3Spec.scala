@@ -11,11 +11,17 @@ class UseCase3Spec extends Specification {
       val parsed = FileParser.parse(source)
       Account.fromOCR(parsed).map(_.report) must beEqualTo(
         List(
-          "457508000 ",
-          "664371495 ERR",
-          "86110??36 ILL"
+          "000000051",
+          "49006771? ILL",
+          "1234?678? ILL"
         )
       )
+    }
+  }
+
+  "An illegal account" should {
+    "not have a valid checksum" in {
+      Account("1234?678?").valid must beFalse
     }
   }
 

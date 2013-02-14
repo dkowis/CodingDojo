@@ -5,13 +5,13 @@ import org.shlrm.kataBankOCR.Numbers._
 /**
  * Convenience object so that it's a bit easier to do the fun things that we want
  */
-object Account{
+object Account {
   /**
    * this lets us do things like: Account("123456789")
    * @param number
    * @return
    */
-  def apply(number:String):Account = {
+  def apply(number: String): Account = {
     new Account(number)
   }
 
@@ -21,7 +21,7 @@ object Account{
    * @param lines
    * @return
    */
-  def fromOCR(lines: List[List[String]]):List[Account] = {
+  def fromOCR(lines: List[List[String]]): List[Account] = {
     lines.map(unparsed => {
       //Collect a number out of the first 3 characters of all three lists
       val line1 = unparsed(0).grouped(3).toList
@@ -44,22 +44,31 @@ object Account{
 class Account(accountNumber: String) {
 
   lazy val valid: Boolean = {
-    val ints = accountNumber.map(x => {
-      x.asDigit
-    }).toList
+    if (accountNumber.contains('?'))
+      false
+    else {
+      val ints = accountNumber.map(x => {
+        x.asDigit
+      }).toList
 
-    def checksum(acc: Int, xs: List[Int]): Boolean = {
-      if (xs.isEmpty)
-        acc % 11 == 0
-      else {
-        checksum(acc + xs.head * xs.size, xs.tail)
+      def checksum(acc: Int, xs: List[Int]): Boolean = {
+        if (xs.isEmpty)
+          acc % 11 == 0
+        else {
+          checksum(acc + xs.head * xs.size, xs.tail)
+        }
       }
+      checksum(0, ints)
     }
-    checksum(0, ints)
   }
 
   lazy val status: String = {
-    ???
+    if (accountNumber.contains("?"))
+      "ILL"
+    else if (!valid)
+      "ERR"
+    else
+      ""
   }
 
   def report = {
