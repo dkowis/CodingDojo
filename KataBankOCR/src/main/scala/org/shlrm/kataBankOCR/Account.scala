@@ -71,7 +71,15 @@ class Account(accountNumber: String) {
       ""
   }
 
-  def report = {
+  /**
+   * Do all the things that are required in Use Case 4!
+   * Think about recursion!
+   */
+  lazy val rectified = {
+    ???
+  }
+
+  val report = {
     s"${accountNumber} ${status}".trim
   }
 
