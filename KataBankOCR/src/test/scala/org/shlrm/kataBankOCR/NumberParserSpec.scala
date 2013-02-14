@@ -6,7 +6,7 @@ import org.specs2.specification.Scope
 
 trait fileSetup extends Scope {
   lazy val source = Source.fromURL(getClass.getResource("/usecase1.txt"))
-  lazy val parser = new NumberParser()
+  lazy val parser = new FileParser()
 }
 
 class NumberParserSpec extends Specification {

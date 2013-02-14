@@ -7,7 +7,7 @@ class UseCaseOneSpec extends Specification {
   "The file with the tests for usecase1" should {
     "compute out to the correct list of account numbers" in {
       val source = Source.fromURL(getClass.getResource("/usecase1.txt"))
-      val parser = new NumberParser()
+      val parser = new FileParser()
       val parsed = parser.parseFile(source)
       Account.fromOCR(parsed).map(_.toString) must beEqualTo(
         List(

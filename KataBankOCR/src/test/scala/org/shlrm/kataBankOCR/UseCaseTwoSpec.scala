@@ -8,7 +8,7 @@ class UseCaseTwoSpec extends Specification {
       Account("457508000").valid must beTrue
     }
     "know if an account number is not valid" in {
-      val parser = new NumberParser()
+      val parser = new FileParser()
       Account("664371495").valid must beFalse
     }
   }
