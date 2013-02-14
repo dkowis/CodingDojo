@@ -9,7 +9,7 @@ class UseCase3Spec extends Specification {
     "produce a list of findings" in {
       val source = Source.fromURL(getClass.getResource("/usecase3.txt"))
       val parsed = FileParser.parse(source)
-      Account.fromOCR(parsed).map(x => s"${x.toString} ${x.status}") must beEqualTo(
+      Account.fromOCR(parsed).map(_.report) must beEqualTo(
         List(
           "457508000 ",
           "664371495 ERR",

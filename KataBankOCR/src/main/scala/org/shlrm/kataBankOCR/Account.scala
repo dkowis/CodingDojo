@@ -62,6 +62,10 @@ class Account(accountNumber: String) {
     ???
   }
 
+  def report = {
+    s"${accountNumber} ${status}".trim
+  }
+
   override def toString = {
     s"${accountNumber}"
   }
