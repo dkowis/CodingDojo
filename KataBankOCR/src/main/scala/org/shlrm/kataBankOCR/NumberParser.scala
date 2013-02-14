@@ -32,4 +32,6 @@ class NumberParser() {
       accountNumber
     })
   }
+
+  def validAccount(acct: String):Boolean = ???
 }
