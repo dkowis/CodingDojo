@@ -16,7 +16,7 @@ object Account {
   }
 
   def apply(number: String): Account = {
-    new Account(number, List())
+    new Account(number)
   }
 
   /**
@@ -49,7 +49,7 @@ object Account {
  * represents an account, hooray for encapsulation :D
  * @param accountNumber
  */
-class Account(accountNumber: String, ocrNumbers: List[String]) {
+class Account(accountNumber: String, ocrNumbers: List[String] = List()) {
 
   lazy val valid: Boolean = {
     if (accountNumber.contains('?'))
