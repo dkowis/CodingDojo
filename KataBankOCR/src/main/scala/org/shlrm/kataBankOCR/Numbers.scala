@@ -75,10 +75,10 @@ class Number(original: String) {
    */
   def difference(other: String) = {
     val mine = original.toCharArray.toList
-    val theirs = original.toCharArray.toList
+    val theirs = other.toCharArray.toList
     val map = Numbers.map.toCharArray.toList
 
-    (0 to Numbers.map.size).foldLeft(0)((acc, idx) => {
+    (0 to (Numbers.map.size-1)).foldLeft(0)((acc, idx) => {
       if (map(idx) == '#' && mine(idx) != theirs(idx)) {
         acc + 1
       } else {
@@ -91,6 +91,12 @@ class Number(original: String) {
     for(
       p <- Numbers.allNums
       if (difference(p) == 1)
-    ) yield p
+    ) yield {
+      new Number(p)
+    }
+  }
+
+  override def toString = {
+    parsedValue.toString
   }
 }
