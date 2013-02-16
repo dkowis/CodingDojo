@@ -43,6 +43,11 @@ object Numbers {
     "|_|\n" +
     " _|"
 
+  val map =
+  " # \n" +
+  "###\n" +
+  "###"
+
   def fromString(s: String): Char = s match {
     case `one`   => '1'
     case `two`   => '2'
@@ -55,5 +60,37 @@ object Numbers {
     case `nine`  => '9'
     case `zero`  => '0'
     case _       => '?'
+  }
+
+  val allNums = List(one,two,three,four,five,six,seven,eight,nine,zero)
+}
+
+class Number(original: String) {
+  val parsedValue = Numbers.fromString(original)
+
+  /**
+   * Report the degree of difference between this number and a different one
+   * Just returns the number of changes, either pipes or _s
+   * @param other
+   */
+  def difference(other: String) = {
+    val mine = original.toCharArray.toList
+    val theirs = original.toCharArray.toList
+    val map = Numbers.map.toCharArray.toList
+
+    (0 to Numbers.map.size).foldLeft(0)((acc, idx) => {
+      if (map(idx) == '#' && mine(idx) != theirs(idx)) {
+        acc + 1
+      } else {
+        acc
+      }
+    })
+  }
+
+  val otherPossibilities = {
+    for(
+      p <- Numbers.allNums
+      if (difference(p) == 1)
+    ) yield p
   }
 }
