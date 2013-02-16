@@ -87,7 +87,7 @@ class Number(original: String) {
     })
   }
 
-  val otherPossibilities = {
+  lazy val otherPossibilities = {
     for(
       p <- Numbers.allNums
       if (difference(p) == 1)
