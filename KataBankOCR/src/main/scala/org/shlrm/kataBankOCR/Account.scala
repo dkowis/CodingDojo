@@ -11,8 +11,12 @@ object Account {
    * @param number
    * @return
    */
+  def apply(number: String, ocrNumbers: List[String]): Account = {
+    new Account(number, ocrNumbers)
+  }
+
   def apply(number: String): Account = {
-    new Account(number)
+    new Account(number, List())
   }
 
   /**
@@ -29,10 +33,14 @@ object Account {
       val line3 = unparsed(2).grouped(3).toList
 
       //I know that there are 9 numbers in a line
-      val accountNumber = (0 to 8).foldLeft("")((acc, index) => {
-        acc + fromString(s"${line1(index)}\n${line2(index)}\n${line3(index)}")
+      val ocrNumbers = (0 to 8).foldLeft(List[String]())((acc, index) => {
+        s"${line1(index)}\n${line2(index)}\n${line3(index)}" :: acc
+      }).reverse
+
+      val accountNumber = ocrNumbers.foldLeft("")((acc, i) => {
+        acc + fromString(i)
       })
-      Account(accountNumber)
+      Account(accountNumber, ocrNumbers)
     })
   }
 }
@@ -41,7 +49,7 @@ object Account {
  * represents an account, hooray for encapsulation :D
  * @param accountNumber
  */
-class Account(accountNumber: String) {
+class Account(accountNumber: String, ocrNumbers: List[String]) {
 
   lazy val valid: Boolean = {
     if (accountNumber.contains('?'))
@@ -74,6 +82,7 @@ class Account(accountNumber: String) {
   /**
    * Do all the things that are required in Use Case 4!
    * Think about recursion!
+   * Should be alist of all other possible Accounts that could come from this garbage one
    */
   lazy val rectified = {
     ???
