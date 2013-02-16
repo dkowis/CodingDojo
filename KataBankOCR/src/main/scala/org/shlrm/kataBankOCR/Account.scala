@@ -11,7 +11,7 @@ object Account {
    * @param number
    * @return
    */
-  def apply(number: String, ocrNumbers: List[String]): Account = {
+  def apply(number: String, ocrNumbers: List[Number]): Account = {
     new Account(number, ocrNumbers)
   }
 
@@ -33,15 +33,22 @@ object Account {
       val line3 = unparsed(2).grouped(3).toList
 
       //I know that there are 9 numbers in a line
-      val ocrNumbers = (0 to 8).foldLeft(List[String]())((acc, index) => {
-        s"${line1(index)}\n${line2(index)}\n${line3(index)}" :: acc
+      val ocrNumbers = (0 to 8).foldLeft(List[Number]())((acc, index) => {
+        val num = new Number(s"${line1(index)}\n${line2(index)}\n${line3(index)}")
+        num :: acc
       }).reverse
 
       val accountNumber = ocrNumbers.foldLeft("")((acc, i) => {
-        acc + fromString(i)
+        acc + i.parsedValue
       })
       Account(accountNumber, ocrNumbers)
     })
+  }
+
+  def fromNumbers(numbers: List[Number]): Account = {
+    Account(numbers.foldLeft("")((acc, n) => {
+      acc + n.parsedValue
+    }))
   }
 }
 
@@ -49,7 +56,7 @@ object Account {
  * represents an account, hooray for encapsulation :D
  * @param accountNumber
  */
-class Account(accountNumber: String, ocrNumbers: List[String] = List()) {
+class Account(accountNumber: String, ocrNumbers: List[Number] = List()) {
 
   lazy val valid: Boolean = {
     if (accountNumber.contains('?'))
@@ -85,7 +92,36 @@ class Account(accountNumber: String, ocrNumbers: List[String] = List()) {
    * Should be alist of all other possible Accounts that could come from this garbage one
    */
   lazy val rectified = {
-    ???
+    //Build a list of all possible account numbers that could exist from this one where only one bar/line is missing
+    def tryAccounts(acc: List[Account], done: List[Number], rem: List[Number]): List[Account] = {
+      if (rem.isEmpty) {
+        acc
+      } else {
+        val altAccts = rem.head.otherPossibilities.map(x => {
+          val acct = Account.fromNumbers(done ::: List(x) ::: rem.tail)
+          if (acct.valid)
+            acct
+          else
+            null
+        }).filterNot(_ == null)
+        acc ::: altAccts ::: tryAccounts(acc, done ::: List(rem.head), rem.tail)
+      }
+    }
+
+    val fixed = tryAccounts(List(), List(), ocrNumbers).sortBy( x => x.toString)
+
+    //Format the output for the report
+    if (fixed.size == 1) {
+      //Single possible account
+      fixed.head.toString
+    } else if (fixed.size > 1) {
+      //Multiple possible accounts, need to build a pretty string of mine, and other accounts
+      val joined = fixed.map(x => s"'${x.toString}'").mkString(", ")
+      s"${toString} AMB [${joined}]"
+    } else {
+      //No possible accounts!(Not covered in the test cases)
+      "UNDEFINED"
+    }
   }
 
   val report = {
