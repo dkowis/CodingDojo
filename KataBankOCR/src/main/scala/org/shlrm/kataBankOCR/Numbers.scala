@@ -20,7 +20,8 @@ object Numbers {
     " _|"
   val  four =
     "   \n" +
-    "|_|\n  |"
+    "|_|\n" +
+    "  |"
   val  five =
     " _ \n" +
     "|_ \n" +
