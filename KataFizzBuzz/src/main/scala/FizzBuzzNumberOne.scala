@@ -11,7 +11,7 @@ object FizzBuzzOne {
 case class FizzBuzzNumberOne(v: Int) {
   val value = {
     if (v % 3 == 0 && v % 5 == 0) {
-      "FizzBuzzNumberOne"
+      "FizzBuzz"
     } else if (v % 3 == 0) {
       "Fizz"
     } else if (v % 5 == 0) {
