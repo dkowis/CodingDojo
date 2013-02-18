@@ -1,6 +1,6 @@
 import org.specs2.mutable.Specification
 
-class FizzBuzzSpec extends Specification {
+class FizzBuzzOneSpec extends Specification {
   "if a number is divisible by three you get Fizz and five you get Buzz both you get FizzBuzz" should {
     "for 1" in {
       FizzBuzzOne(1).take(1).toList.map{_.value} must beEqualTo(
