@@ -4,11 +4,12 @@ class CartSpec extends Specification {
 
   "Discounts are computed correctly" >> {
     "for 0 books" in {
-      val cart = new Cart(0,0,0,0,0)
+      val cart = new Cart(Map())
       cart.cost === 0
     }
     "for 1 book" in {
-      pending
+      val cart = new Cart(Map("first" -> 1))
+      cart.cost === 8
     }
     "for 2 different books" in {
       pending
