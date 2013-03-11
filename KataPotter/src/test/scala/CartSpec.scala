@@ -1,11 +1,11 @@
 import org.specs2.mutable._
-import io.Source
 
 class CartSpec extends Specification {
 
   "Discounts are computed correctly" >> {
     "for 0 books" in {
-      pending
+      val cart = new Cart(0,0,0,0,0)
+      cart.cost === 0
     }
     "for 1 book" in {
       pending
