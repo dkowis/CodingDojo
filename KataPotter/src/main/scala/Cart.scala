@@ -1,4 +1,15 @@
 
+/**
+  * This is because I'm lazy and don't want to type much
+  */
+object Book{
+  val first = "one"
+  val second = "two"
+  val third = "three"
+  val fourth = "four"
+  val fifth = "five"
+}
+
 case class Cart(books: Map[String, Int]) {
   val single = 8
 

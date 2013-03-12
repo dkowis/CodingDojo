@@ -1,4 +1,5 @@
 import org.specs2.mutable._
+import Book._
 
 class CartSpec extends Specification {
 
@@ -8,31 +9,31 @@ class CartSpec extends Specification {
       cart.cost === 0
     }
     "for 1 book" in {
-      val cart = new Cart(Map("first" -> 1))
+      val cart = new Cart(Map(first -> 1))
       cart.cost === 8
     }
     "for 2 different books" in {
-      val cart = new Cart(Map("first" -> 1, "second" -> 1))
+      val cart = new Cart(Map(first -> 1, second -> 1))
       cart.cost === 15.2
     }
     "for 2 identical books" in {
-      val cart = new Cart(Map("first" -> 2))
+      val cart = new Cart(Map(first -> 2))
       cart.cost === 16
     }
     "for 3 different books" in {
-      val cart = new Cart(Map("first" -> 1, "second" -> 1, "third" -> 1))
+      val cart = new Cart(Map(first -> 1, second -> 1, third -> 1))
       cart.cost === 21.6
     }
     "for 2 identical books and 1 other book" in {
-      val cart = new Cart(Map("first" -> 2, "second" -> 1))
+      val cart = new Cart(Map(first -> 2, second -> 1))
       cart.cost === 29.6
     }
     "for 4 different books" in {
-      val cart = new Cart(Map("first" -> 1, "second" -> 1, "third" -> 1, "fourth" -> 1))
+      val cart = new Cart(Map(first -> 1, second -> 1, third -> 1, fourth -> 1))
       cart.cost === 25.6
     }
     "for 5 different books" in {
-      val cart = new Cart(Map("first" -> 1, "second" -> 1, "third" -> 1, "fourth" -> 1, "fifth" -> 1))
+      val cart = new Cart(Map(first -> 1, second -> 1, third -> 1, fourth -> 1, fifth -> 1))
       cart.cost === 30
     }
 
@@ -45,7 +46,7 @@ class CartSpec extends Specification {
         1 copy of the fifth book
         answer: 51.20
       */
-      val cart = new Cart(Map("first" -> 2, "second" -> 2, "third" -> 2, "fourth" -> 1, "fifth" -> 1))
+      val cart = new Cart(Map(first -> 2, second -> 2, third -> 2, fourth -> 1, fifth -> 1))
       cart.cost === 51.20
     }
   }
