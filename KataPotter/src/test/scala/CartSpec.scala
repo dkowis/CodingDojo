@@ -26,7 +26,7 @@ class CartSpec extends Specification {
     }
     "for 2 identical books and 1 other book" in {
       val cart = new Cart(Map(first -> 2, second -> 1))
-      cart.cost === 29.6
+      cart.cost === 23.2
     }
     "for 4 different books" in {
       val cart = new Cart(Map(first -> 1, second -> 1, third -> 1, fourth -> 1))

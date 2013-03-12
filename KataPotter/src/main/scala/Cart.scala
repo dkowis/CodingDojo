@@ -73,18 +73,16 @@ case class Cart(books: Map[String, Int]) {
   def cost: Double = {
 
     def discount(count: Int, discount: Double): Double = {
-      println(s"doing discount for ${count} items with a discount of ${discount}")
       count * single * (1 - discount)
     }
 
     if (books.isEmpty) {
       0
     } else {
-      println(s"Discounts are: ${discounts mkString "," }")
       val leHax = discounts.foldLeft(0.0)((acc, v) => {
         acc + discount(Discount.count(v), v)
       })
-      println(s"So cost is: ${leHax}")
+      println(s"Discounts: ${discounts mkString ","} -- cost is: ${leHax}")
       leHax
     }
   }
