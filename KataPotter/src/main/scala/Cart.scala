@@ -57,7 +57,6 @@ case class Cart(books: Map[String, Int]) {
 
   val discounts = {
     def availableDiscounts(acc: List[Double], map: Map[String, Int]): List[Double] = {
-      //Find all available discounts, including permutations (two sets of four)
       if (map.isEmpty) {
         acc
       } else {
@@ -66,6 +65,15 @@ case class Cart(books: Map[String, Int]) {
         availableDiscounts(discount :: acc, newMap)
       }
     }
+
+//    def allAvailableDiscounts(acc: List[Double], map: Map[String, Int], maxDiscount: Int):List[Double] = {
+//      if (map.isEmpty){
+//        acc
+//      } else {
+//        val discountSize = if (map.keySet.size > maxDiscount) maxDiscount else map.keySet.size
+//        //Create a new map, subtracting discountSize times from it...
+//      }
+//    }
 
     availableDiscounts(List(), books)
   }

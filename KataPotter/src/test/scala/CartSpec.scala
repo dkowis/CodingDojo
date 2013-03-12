@@ -50,4 +50,38 @@ class CartSpec extends Specification {
       cart.cost === 51.20
     }
   }
+
+  "Discounts are applied correctly for provided test cases" >> {
+    "1,1,1" in {
+      new Cart(Map(first -> 3)).cost === 8 * 3
+    }
+
+    "1,1,2" in {
+      new Cart(Map(first -> 2, second -> 1)).cost === 8 + (8 * 2 * 0.95)
+    }
+
+    "1,1,2,2" in {
+      new Cart(Map(first -> 2, second -> 2)).cost === 2 * (8 * 2 * 0.95)
+    }
+  }
+
+  "Discounts are applied correctly for several discounts" >> {
+    "1,1,2,3,3,4" in {
+      new Cart(Map(first -> 2, second -> 2, third -> 2, fourth -> 1)).cost === (8 * 4 * 0.8) + (8 * 2 * 0.95)
+    }
+
+    "1,2,2,3,4,5" in {
+      new Cart(Map(first -> 1, second -> 2, third -> 1, fourth -> 1, fifth -> 1)).cost === 8 + (8 * 5 * 0.75)
+    }
+  }
+
+  "Discounts are applied correctly in edge cases" >> {
+    "1,1,2,2,3,3,4,5" in {
+      new Cart(Map(first -> 2, second -> 2, third -> 3, fourth -> 1, fifth -> 1)).cost === 2 * (8 * 4 * 0.8)
+    }
+
+    "1,1,1,1,1, 2,2,2,2,2, 3,3,3,3, 4,4,4,4,4, 5,5,5,5" in {
+      new Cart(Map(first -> 5, second -> 5, third -> 4, fourth -> 5, fifth ->4)).cost === 3 * (8 * 5 * 0.75) + 2 * (8 * 4 * 0.8)
+    }
+  }
 }
