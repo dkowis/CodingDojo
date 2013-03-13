@@ -1,3 +1,5 @@
+package org.shlrm.codingDojo.kataPotter
+
 
 /**
  * This is because I'm lazy and don't want to type much
@@ -75,14 +77,15 @@ case class Cart(books: Map[String, Int]) {
           acc
         } else {
           val discountSize = if (map.keySet.size > maxDiscount) maxDiscount else map.keySet.size
+          println ("")
+          println(s"original map: ${toString(map)}")
+
           println(s"Discount size is ${discountSize}")
           val toRemoveKeys = map.keySet.take(discountSize)
           println(s"removing keys: ${toRemoveKeys mkString ","}")
 
           val first = map.filter(p => {
-            val value = !toRemoveKeys.contains(p._1.toString)
-            println(s"removing ${p._1.toString} if it's in ${toRemoveKeys mkString ","}  value is ${value}")
-            value
+            !toRemoveKeys.contains(p._1.toString)
           })
           println(s"first: ${toString(first)}")
 
