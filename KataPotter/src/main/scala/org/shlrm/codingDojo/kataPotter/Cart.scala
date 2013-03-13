@@ -85,8 +85,12 @@ case class Cart(books: Map[String, Int]) {
           println(s"removing keys: ${toRemoveKeys mkString ","}")
 
           val first = map.filter(p => {
-            !toRemoveKeys.contains(p._1.toString)
+            def value = !toRemoveKeys.contains(p._1.toString)
+            println(s"I don't even know how this is possible: ${value}")
+            value
           })
+          //I Don't understand how this can possibly be happening
+          //THe output to the screen is different than the actual map itself, that's unpossible.
           println(s"first: ${toString(first)}")
 
           val second = first.mapValues(v => v -1)
