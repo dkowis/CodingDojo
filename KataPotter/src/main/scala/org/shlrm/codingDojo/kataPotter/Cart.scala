@@ -69,7 +69,7 @@ case class Cart(books: Map[String, Int]) {
     }
 
     def allAvailableDiscounts(acc: List[List[Double]], map: Map[String, Int], maxDiscount: Int): List[List[Double]] = {
-      //println(s"discounts for ${toString(map)}: ${acc mkString ","} max: ${maxDiscount}")
+      //println(s"discounts for ${mappedString(map)}: ${acc mkString ","} max: ${maxDiscount}")
       if (map.isEmpty) {
         acc
       } else {
@@ -78,7 +78,7 @@ case class Cart(books: Map[String, Int]) {
         } else {
           val discountSize = if (map.keySet.size > maxDiscount) maxDiscount else map.keySet.size
           println ("")
-          println(s"original map: ${toString(map)}")
+          println(s"original map: ${mappedString(map)}")
 
           println(s"Discount size is ${discountSize}")
           val toRemoveKeys = map.keySet.take(discountSize)
@@ -91,13 +91,13 @@ case class Cart(books: Map[String, Int]) {
           })
           //I Don't understand how this can possibly be happening
           //THe output to the screen is different than the actual map itself, that's unpossible.
-          println(s"first: ${toString(first)}")
+          println(s"first: ${mappedString(first)}")
 
           val second = first.mapValues(v => v -1)
-          println(s"second: ${toString(second)}")
+          println(s"second: ${mappedString(second)}")
 
           val newMap = (map.filterKeys(k => toRemoveKeys.contains(k)).mapValues(v => v - 1) ++ map.filterKeys(k => !toRemoveKeys.contains(k))).filterNot(p => p._2 == 0)
-          println(s"new map is: ${toString(newMap)}")
+          println(s"new map is: ${mappedString(newMap)}")
           allAvailableDiscounts(availableDiscounts(List(), newMap, maxDiscount) :: acc, newMap, maxDiscount) ++
             allAvailableDiscounts(availableDiscounts(List(), map, maxDiscount - 1) :: acc, map, maxDiscount - 1)
         }
@@ -136,7 +136,7 @@ case class Cart(books: Map[String, Int]) {
     }
   }
 
-  def toString(map: Map[String, Int]) = {
+  def mappedString(map: Map[String, Int]) = {
     //GO from the mapped values to a set of strings
     books.foldLeft(List[Int]())((acc:List[Int], p) => {
       (1 to p._2).foldLeft(List[Int]())( (a:List[Int],i) => {
@@ -153,6 +153,6 @@ case class Cart(books: Map[String, Int]) {
   }
 
   override def toString = {
-    toString(books)
+    mappedString(books)
   }
 }
