@@ -70,7 +70,7 @@ class CartSpec extends Specification {
 
   "Discounts are applied correctly for several discounts" >> {
     "1,1,2,3,3,4" in {
-      new Cart(Map(first -> 2, second -> 2, third -> 2, fourth -> 1)).cost === (8 * 4 * 0.8) + (8 * 2 * 0.95)
+      new Cart(Map(first -> 2, second -> 1, third -> 2, fourth -> 1)).cost === (8 * 4 * 0.8) + (8 * 2 * 0.95)
     }
 
     "1,2,2,3,4,5" in {
@@ -80,7 +80,7 @@ class CartSpec extends Specification {
 
   "Discounts are applied correctly in edge cases" >> {
     "1,1,2,2,3,3,4,5" in {
-      new Cart(Map(first -> 2, second -> 2, third -> 3, fourth -> 1, fifth -> 1)).cost === 2 * (8 * 4 * 0.8)
+      new Cart(Map(first -> 2, second -> 2, third -> 2, fourth -> 1, fifth -> 1)).cost === 2 * (8 * 4 * 0.8)
     }
 
     "1,1,1,1,1, 2,2,2,2,2, 3,3,3,3, 4,4,4,4,4, 5,5,5,5" in {
