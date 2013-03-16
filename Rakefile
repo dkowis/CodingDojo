@@ -3,11 +3,8 @@ require 'fileutils'
 
 desc "Create a new scala project"
 task :new, :name do |t, args|
-  puts "project name #{args[:name]}"
   root = File.dirname(__FILE__)
   template_dir = File.join(root, "template")
-  puts "templates: #{template_dir}"
-  puts "root: #{root}"
 
   project_dir = File.join(root, args[:name])
   FileUtils.mkdir project_dir
