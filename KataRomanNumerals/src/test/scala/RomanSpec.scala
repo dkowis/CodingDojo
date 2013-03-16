@@ -17,5 +17,29 @@ class RomanSpec extends Specification {
     "2008" in {
       Roman(2008) === "MMVIII"
     }
+    "2013" in{
+      Roman(2013) === "MMXIII"
+    }
+  }
+
+  "Roman numbers are converted back to normal for" >> {
+    "I" in {
+      Roman.toNormal("I") === 1
+    }
+    "V" in {
+      Roman.toNormal("V") === 5
+    }
+    "IX" in {
+      Roman.toNormal("IX") === 9
+    }
+    "MMVIII" in{
+      Roman.toNormal("MMVIII") === 2008
+    }
+    "MCMXC" in {
+      Roman.toNormal("MCMXC") === 1990
+    }
+    "MMXIII" in {
+      Roman.toNormal("MMXIII") === 2013
+    }
   }
 }

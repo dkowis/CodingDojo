@@ -24,4 +24,26 @@ object Roman {
     }
     convert(List(), number.toString.toList).reverse mkString ""
   }
+
+  def toNormal(roman:String):Int = {
+    val uber = toRoman.reverse.map(iv => iv.reverse).flatten
+    def convert(acc: List[Int], romans:String): List[Int] = {
+      if (romans.isEmpty){
+        acc
+      } else {
+        val found = uber.filter(numeral => romans.startsWith(numeral)).head
+        val int = if (thousands.contains(found)) {
+          1000 * (thousands.indexOf(found) +1)
+        } else if (hundreds.contains(found)) {
+          100 * (hundreds.indexOf(found) +1)
+        } else if (tens.contains(found)) {
+          10 * (tens.indexOf(found) +1)
+        } else {
+          ones.indexOf(found) + 1
+        }
+        convert(int :: acc, romans.replaceFirst(found, ""))
+      }
+    }
+    convert(List(), roman).sum
+  }
 }
