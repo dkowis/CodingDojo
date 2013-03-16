@@ -1,6 +1,5 @@
 package org.shlrm.codingDojo.kataPotter
 
-import org.shlrm.codingDojo.kataPotter.{Book, Cart}
 import org.specs2.mutable._
 import Book._
 

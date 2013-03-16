@@ -15,7 +15,7 @@ object Book {
 case class Cart(books: Map[Int, Int]) {
   val single = 8
 
-  val discounts: List[List[Double]] = {
+  val discounts: List[Double] = {
     /**
      * check to see if the map contains all of the keys specified in the list
      * @param map
@@ -27,9 +27,6 @@ case class Cart(books: Map[Int, Int]) {
     }
 
     def discountsOfSize(acc: List[Double], myBooks: Map[Int, Int], size: Int): List[Double] = {
-      //Need to look for a set of unique the same size
-      //println(s"I'm looking for ${size} unique items in ${mappedString(myBooks)}")
-
       if (myBooks.keySet.isEmpty || size == 0) {
         acc
       } else {
@@ -47,25 +44,25 @@ case class Cart(books: Map[Int, Int]) {
           }).filterNot(p => p._2 == 0)
           //make a discount of size
           val discount = Discount(size);
-          //println(s"Appending a discount of ${discount}")
           //again with the same size!
           discountsOfSize(discount :: acc, next, size)
         } else {
-          //println(s"${size} unique items is more than ${mappedString(myBooks)} has")
           //Not all the things are in here, need to recurse with a smaller size
           discountsOfSize(acc, myBooks, size - 1)
         }
       }
     }
 
-    new Range(5, 1, -1).foldLeft(List[List[Double]]())((a, x) => {
-      //println(s"Finding discounts with max size of ${x}")
-      discountsOfSize(List(), books, x) :: a
-    })
+    //Woot figured out how to do it with pattern matching! A WINNER IS ME
+    discountsOfSize(List(), books, 5).grouped(2).toList.map(l => {
+      l match {
+        case List(Discount.three, Discount.five) => List(Discount.four, Discount.four)
+        case _ => l
+      }
+    }).flatten
   }
 
-  def cost: Double = {
-
+  val cost: Double = {
     def discount(count: Int, discount: Double): Double = {
       count * single * (1 - discount)
     }
@@ -73,33 +70,16 @@ case class Cart(books: Map[Int, Int]) {
     if (books.isEmpty) {
       0
     } else {
-
-      println("========= DISCOUNTS =============")
-      println(discounts)
-      println("=================================")
-      val leHax = discounts.foldLeft(-1.0)((acc, v) => {
-        val one = v.foldLeft(0.0)((a, v1) => {
-          a + discount(Discount.count(v1), v1)
-        })
-        println(s"Comparing ${acc} with ${one} -- Discounts: ${v mkString ","}")
-        if (acc == -1.0) {
-          one
-        } else {
-          if (acc < one || one == 0) {
-            acc
-          } else {
-            one
-          }
-        }
+      val leHax = discounts.foldLeft(0.0)((acc, v) => {
+        acc + discount(Discount.count(v), v)
       })
-      println(s"final cost is: ${leHax}")
       leHax
     }
   }
 
   def mappedString(map: Map[Int, Int]) = {
     //GO from the mapped values to a set of strings
-    //OH GOD I"M DUMB
+    //OH GOD I"M DUMB -- Use the map, not the one from the class
     map.foldLeft(List[Int]())((acc: List[Int], p) => {
       (1 to p._2).foldLeft(List[Int]())((a: List[Int], i) => {
         val wat = p._1 match {
