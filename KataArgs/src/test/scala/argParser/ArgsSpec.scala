@@ -5,7 +5,9 @@ import org.specs2.mutable._
 class ArgsSpec extends Specification {
   "Argument parser can parse arguments according to our spec" >> {
     "-l" in {
-      Args(List(Arg.bool("l")))
+      val lArg = Arg.bool("l")
+      val argParser = new Args("-l", List(lArg))
+      pending
     }
     "-avz" in {
       pending
