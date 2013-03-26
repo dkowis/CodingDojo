@@ -6,12 +6,12 @@ package argParser
  * @param convert
  * @tparam A
  */
-case class Arg[A](flag: String, convert: String => A, consume: List[String] => String)
+case class Arg[+A](flag: String, convert: String => A, consume: List[String] => String)
 
 object Arg {
-  def bool(flag: String) = new Arg(flag, x => augmentString(x).toBoolean, tokens => "") //Boolean flags don't take anything
+  def bool(flag: String) = new Arg[Boolean](flag, x => augmentString(x).toBoolean, tokens => "") //Boolean flags don't take anything
 
-  def int(flag: String) = new Arg(flag, x => augmentString(x).toInt, tokens => {
+  def int(flag: String) = new Arg[Int](flag, x => augmentString(x).toInt, tokens => {
     ""
   })
 }
